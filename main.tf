@@ -1,6 +1,8 @@
 provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  region     = var.aws_region
+  profile    = var.aws_profile
 }
 
 resource "aws_key_pair" "elk_auth" {
@@ -33,9 +35,9 @@ data "template_file" "init_elasticsearch" {
 }
 
 resource "aws_instance" "elasticsearch" {
-  ami           = var.aws_amis[var.aws_region]
-  instance_type = var.elk_instance_type
-  key_name      = var.aws_key_name
+  ami                  = var.aws_amis[var.aws_region]
+  instance_type        = var.elk_instance_type
+  key_name             = var.aws_key_name
   security_groups      = [module.security.elasticsearch_sc_id]
   subnet_id            = module.network.elk_private_subnet_id
   iam_instance_profile = module.iam.es_iam_id
@@ -63,9 +65,9 @@ data "template_file" "init_logstash" {
 }
 
 resource "aws_instance" "logstash" {
-  ami           = var.aws_amis[var.aws_region]
-  instance_type = var.elk_instance_type
-  key_name      = var.aws_key_name
+  ami             = var.aws_amis[var.aws_region]
+  instance_type   = var.elk_instance_type
+  key_name        = var.aws_key_name
   security_groups = [module.security.esearch_sc_id]
   subnet_id       = module.network.elk_private_subnet_id
 
@@ -92,9 +94,9 @@ data "template_file" "init_kibana" {
 }
 
 resource "aws_instance" "kibana" {
-  ami           = var.aws_amis[var.aws_region]
-  instance_type = var.elk_instance_type
-  key_name      = var.aws_key_name
+  ami             = var.aws_amis[var.aws_region]
+  instance_type   = var.elk_instance_type
+  key_name        = var.aws_key_name
   security_groups = [module.security.elk_sc_id]
   subnet_id       = module.network.elk_public_subnet_id
 

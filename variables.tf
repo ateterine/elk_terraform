@@ -1,3 +1,6 @@
+variable "aws_secret_key" {}
+variable "aws_access_key" {}
+
 variable "aws_region" {
   description = "AWS regione where launch servers"
   default     = "us-west-2"
@@ -27,11 +30,13 @@ Ensure this keypair is added to your local SSH agent so provisioners can
 connect.
 Example: ~/.ssh/elk-terraform.pub
 DESCRIPTION
-
+  default     = "~/sources/keys/ateterine.pem"
 }
 
 variable "aws_key_name" {
   description = "Name of the AWS key pair"
+  default     = "~/sources/keys/ateterine.pem"
+
 }
 
 variable "elasticsearch_data_dir" {
