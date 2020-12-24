@@ -1,9 +1,6 @@
-variable "aws_secret_key" {}
-variable "aws_access_key" {}
-
 variable "aws_region" {
   description = "AWS regione where launch servers"
-  default     = "us-west-2"
+  default     = "us-east-1"
 }
 
 variable "aws_profile" {
@@ -23,19 +20,10 @@ variable "elk_instance_type" {
   default = "m4.large"
 }
 
-variable "aws_public_key_path" {
-  description = <<DESCRIPTION
-Path to the SSH public key to be used for authentication.
-Ensure this keypair is added to your local SSH agent so provisioners can
-connect.
-Example: ~/.ssh/elk-terraform.pub
-DESCRIPTION
-  default     = "~/sources/keys/ateterine.pem"
-}
 
 variable "aws_key_name" {
   description = "Name of the AWS key pair"
-  default     = "~/sources/keys/ateterine.pem"
+  default     = "ateterine"
 
 }
 
