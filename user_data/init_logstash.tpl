@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 sudo apt-get update
-sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 sudo apt-get install openjdk-8-jre -y
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install apt-transport-https
-echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get update && sudo apt-get install logstash
-sudo update-rc.d logstash defaults 97 8
+#sudo update-rc.d logstash defaults 97 8
 sudo service logstash start
 
 # Configure the logstash service

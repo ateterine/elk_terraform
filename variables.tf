@@ -12,7 +12,7 @@ variable "aws_amis" {
   default = {
     eu-west-1 = "ami-035966e8adab4aaad"
     us-west-2 = "ami-0d1cd67c26f5fca19"
-    us-east-1 = "ami-07ebfd5b3428b6f4d"
+    us-east-1 = "ami-00ddb0e5626798373"
   }
 }
 
@@ -28,7 +28,7 @@ variable "aws_key_name" {
 }
 
 variable "elasticsearch_data_dir" {
-  default = "/opt/elasticsearch/data"
+  default = "/var/lib/elasticsearch"
 }
 
 variable "elasticsearch_cluster" {
