@@ -19,7 +19,7 @@ module "security" {
 }
 
 data "template_file" "init_elasticsearch" {
-  template = file("./user_data/init_esearch.tpl")
+  template = file("./user_data/init_esearch_oss.tpl")
 
   vars = {
     elasticsearch_cluster  = var.elasticsearch_cluster
@@ -44,9 +44,8 @@ resource "aws_instance" "elasticsearch" {
 
   user_data = data.template_file.init_elasticsearch.rendered
 
-  tags = {
-    Name = "Elasticsearch instance"
-  }
+  tags = merge(map("Name", "Elasticsearch instance"), map("tostop","true"))
+
 }
 
 data "template_file" "init_logstash" {
@@ -73,13 +72,11 @@ resource "aws_instance" "logstash" {
 
   user_data = data.template_file.init_logstash.rendered
 
-  tags = {
-    Name = "Logstash instance"
-  }
+  tags = merge(map("Name", "Logstash instance"), map("tostop","true"))
 }
 
 data "template_file" "init_kibana" {
-  template = file("./user_data/init_kibana.tpl")
+  template = file("./user_data/init_kibana_oss.tpl")
 
   vars = {
     elasticsearch_host = aws_instance.elasticsearch.private_ip
@@ -102,8 +99,7 @@ resource "aws_instance" "kibana" {
 
   user_data = data.template_file.init_kibana.rendered
 
-  tags = {
-    Name = "Kibana instance"
-  }
+  tags = merge(map("Name", "Kibana instance"), map("tostop","true"))
+
 }
 

@@ -8,7 +8,7 @@ sudo apt-get update
 sudo apt-get install apt-transport-https
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get update
-sudo apt-get install elasticsearch
+sudo apt-get install elasticsearch=7.4.2
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-ec2 -s --batch
 
 cat << EOF >/tmp/elasticsearch.yml
