@@ -10,3 +10,7 @@ output "kibana_url" {
   value = "http://${aws_instance.kibana.public_ip}:5601"
 }
 
+output "filebeat_url" {
+  value = "http://${aws_instance.filebeat.public_ip}"
+}
+
