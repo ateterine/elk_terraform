@@ -37,9 +37,8 @@ resource "aws_instance" "elasticsearch" {
 
   ebs_block_device {
     device_name = "/dev/sdb"
-    volume_type = "io1"
+    volume_type = "gp2"
     volume_size = "20"
-    iops        = "500"
   }
 
   user_data = data.template_file.init_elasticsearch.rendered
@@ -49,7 +48,7 @@ resource "aws_instance" "elasticsearch" {
 }
 
 data "template_file" "init_logstash" {
-  template = file("./user_data/init_logstash.tpl")
+  template = file("./user_data/init_logstash_oss.tpl")
 
   vars = {
     elasticsearch_host = aws_instance.elasticsearch.private_ip
@@ -65,9 +64,8 @@ resource "aws_instance" "logstash" {
 
   ebs_block_device {
     device_name = "/dev/sdb"
-    volume_type = "io1"
+    volume_type = "gp2"
     volume_size = "20"
-    iops        = "500"
   }
 
   user_data = data.template_file.init_logstash.rendered
@@ -92,14 +90,41 @@ resource "aws_instance" "kibana" {
 
   ebs_block_device {
     device_name = "/dev/sdb"
-    volume_type = "io1"
+    volume_type = "gp2"
     volume_size = "10"
-    iops        = "500"
   }
 
   user_data = data.template_file.init_kibana.rendered
 
   tags = merge(map("Name", "Kibana instance"), map("tostop","true"))
+
+}
+
+data "template_file" "init_filebeat" {
+  template = file("./user_data/init_filebeat.tpl")
+
+  vars = {
+    elasticsearch_host = aws_instance.elasticsearch.private_ip
+    logstash_host = aws_instance.logstash.private_ip
+  }
+}
+
+resource "aws_instance" "filebeat" {
+  ami             = var.aws_amis[var.aws_region]
+  instance_type   = var.elk_instance_type
+  key_name        = var.aws_key_name
+  security_groups = [module.security.elk_sc_id]
+  subnet_id       = module.network.elk_public_subnet_id
+
+  ebs_block_device {
+    device_name = "/dev/sdb"
+    volume_type = "gp2"
+    volume_size = "10"
+  }
+
+  user_data = data.template_file.init_filebeat.rendered
+
+  tags = merge(map("Name", "Filebeat instance"), map("tostop","true"))
 
 }
 
