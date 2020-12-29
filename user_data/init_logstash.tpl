@@ -33,5 +33,5 @@ hosts => ["${elasticsearch_host}:9200"] # Use the internal IP of your Elasticsea
 }
 EOF
 
-sudo mv /tmp/logstash.conf /etc/logstash/conf.d/10-syslog.conf
+sudo mv /tmp/logstash.conf /etc/logstash/conf.d/7-syslog.conf
 sudo service logstash restart
