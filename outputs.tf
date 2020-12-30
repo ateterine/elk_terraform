@@ -11,6 +11,6 @@ output "kibana_url" {
 }
 
 output "filebeat_url" {
-  value = "http://${aws_instance.filebeat.public_ip}"
+  value = aws_instance.filebeat.private_ip
 }
 
