@@ -1,0 +1,4 @@
+- pipeline.id: shipping
+  path.config: "/etc/logstash/conf.d/7-syslog.conf"
+
+# Copy this file to /etc/logstash

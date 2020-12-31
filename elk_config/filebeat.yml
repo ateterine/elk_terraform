@@ -1,0 +1,12 @@
+#output.elasticsearch:
+#  hosts: ["http://${elasticsearch_host}:9200"]
+
+output.logstash:
+  hosts: ["${logstash_host}:5044"]
+  loadbalance: false
+  ssl.enabled: false
+filebeat.inputs:
+- type: log
+  paths:
+    - /tmp/parkjockey.log
+  scan_frequency: 10s

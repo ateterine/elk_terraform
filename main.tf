@@ -1,6 +1,6 @@
 provider "aws" {
-  region     = var.aws_region
-  profile    = var.aws_profile
+  region  = var.aws_region
+  profile = var.aws_profile
 }
 
 module "iam" {
@@ -43,7 +43,7 @@ resource "aws_instance" "elasticsearch" {
 
   user_data = data.template_file.init_elasticsearch.rendered
 
-  tags = merge(map("Name", "Elasticsearch instance"), map("tostop","true"))
+  tags = merge(map("Name", "Elasticsearch instance"), map("tostop", "true"))
 
 }
 
@@ -70,7 +70,7 @@ resource "aws_instance" "logstash" {
 
   user_data = data.template_file.init_logstash.rendered
 
-  tags = merge(map("Name", "Logstash instance"), map("tostop","true"))
+  tags = merge(map("Name", "Logstash instance"), map("tostop", "true"))
 }
 
 data "template_file" "init_kibana" {
@@ -96,7 +96,7 @@ resource "aws_instance" "kibana" {
 
   user_data = data.template_file.init_kibana.rendered
 
-  tags = merge(map("Name", "Kibana instance"), map("tostop","true"))
+  tags = merge(map("Name", "Kibana instance"), map("tostop", "true"))
 
 }
 
@@ -105,7 +105,7 @@ data "template_file" "init_filebeat" {
 
   vars = {
     elasticsearch_host = aws_instance.elasticsearch.private_ip
-    logstash_host = aws_instance.logstash.private_ip
+    logstash_host      = aws_instance.logstash.private_ip
   }
 }
 
@@ -124,7 +124,6 @@ resource "aws_instance" "filebeat" {
 
   user_data = data.template_file.init_filebeat.rendered
 
-  tags = merge(map("Name", "Filebeat instance"), map("tostop","true"))
+  tags = merge(map("Name", "Filebeat instance"), map("tostop", "true"))
 
 }
-
